@@ -1,5 +1,5 @@
 import os
-restaurantes = ['Xoupana Burger', 'Hot Dog do Félix', 'XU Passeios']
+restaurantes = ['Princesa do Ipiranga', 'Hot Dog do Félix', 'Boutique Miau & Totó']
 
 def exibir_nome_do_programa():
     print("""
