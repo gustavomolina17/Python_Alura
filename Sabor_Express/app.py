@@ -1,5 +1,6 @@
+from ast import main
 import os
-restaurantes = [{'nome':'Boutique Miau & Totó','categoria':'Comida Natural para Pets','ativo':True},
+restaurantes = [{'nome':'Boutique Miau & Totó','categoria':'Comida para Pets','ativo':True},
                 {'nome':'Hot dog do Félix','categoria':'Fast Food','ativo':False},
                 {'nome':'Princesa do Ipiranga','categoria':'Padaria','ativo':False}]
 
@@ -33,7 +34,10 @@ def opcao_invalida():
 
 def exibir_subtitulo(texto):
     os.system('cls')
+    linha = '*' * (len(texto))
+    print(linha)
     print(texto)
+    print(linha)
     print()
 
 def cadastrar_novo_restaurante():
@@ -47,14 +51,32 @@ def cadastrar_novo_restaurante():
     voltar_menu_principal()
 
 def listar_restaurantes():
-    exibir_subtitulo('Listando todos os restaurantes\n')
-    
+    exibir_subtitulo('Listando restaurantes')
+
+    print(f"{'Nome do restaurante'.ljust(22)} | {'Categoria'.ljust(20)} | Status")
+
     for restaurante in restaurantes:
         nome_restaurante = restaurante['nome']
         categoria = restaurante['categoria']
-        ativo = restaurante['ativo']
-        print(f'- {nome_restaurante} | {categoria} | {ativo}')
+        ativo = 'ativado' if restaurante['ativo'] else 'desativado' 
+        print(f'- {nome_restaurante.ljust(20)} | {categoria.ljust(20)} | {ativo}')
 
+    voltar_menu_principal()
+
+def alternar_estado_restaurante():
+    exibir_subtitulo('ALterando estado do restaurante')
+    nome_restaurante = input('Digite o nome do restaurante que deseja alterar o estado: ')
+    restaurante_encontrado = False
+
+    for restaurante in restaurantes:
+        if nome_restaurante == restaurante['nome']:
+            restaurante_encontrado = True
+            restaurante['ativo'] = not restaurante['ativo']
+            mensagem = f'O restaurante {nome_restaurante} foi ativado com sucesso' if restaurante['ativo'] else f'O restaurante {nome_restaurante} foi desativado com sucesso'
+            print(mensagem)
+            
+    if not restaurante_encontrado:
+        print('O restaurante não foi encontrado')
     voltar_menu_principal()
 
 def escolher_opcao():
@@ -67,7 +89,7 @@ def escolher_opcao():
             case 2:
                 listar_restaurantes()
             case 3:
-                print('Ativar Restaurante')
+                alternar_estado_restaurante()
             case 4:
                 finalizar_app()
             case _:
